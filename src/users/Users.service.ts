@@ -9,7 +9,6 @@ export class UsersService {
         return this.users;
     };
     getUser(userName: string) {
-        console.log(userName, "s222ssssssssss");
         return this.users.find(user => user === userName) || "user not found";
     };
     addNewUserName(userName: string) {
