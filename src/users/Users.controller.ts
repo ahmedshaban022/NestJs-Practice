@@ -13,7 +13,6 @@ export class UsersController {
     @Get(":userName")
 
     getUserByName(@Param("userName") userName: string) {
-        console.log(userName, "wwww");
         return this.usersService.getUser(userName);
     }
     @Post(":userName")
