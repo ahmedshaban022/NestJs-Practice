@@ -19,4 +19,12 @@ export class UsersService {
         this.users = this.users.filter(user => user !== userName);
         return this.users
     };
+    updateUser(userName: string, name: string) {
+        const index = this.users.findIndex(user => user === userName);
+        if (index !== -1) {
+            this.users[index] = name;
+            return this.users;
+        }
+        return "user not found";
+    }
 }
