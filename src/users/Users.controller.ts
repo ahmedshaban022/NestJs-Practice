@@ -17,7 +17,6 @@ export class UsersController {
     }
     @Post(":userName")
     addNewUser(@Param() param: any) {
-        console.log(param)
         return this.usersService.addNewUserName(param.userName)
     }
     @Delete(":userName")
