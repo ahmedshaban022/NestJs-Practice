@@ -25,7 +25,6 @@ export class UsersService {
             this.users[index] = name;
             return this.users;
         }
-        console.log("user not found");
         return "user not found";
     }
 }
