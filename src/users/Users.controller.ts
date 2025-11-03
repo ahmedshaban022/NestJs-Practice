@@ -13,7 +13,6 @@ export class UsersController {
     @Get(":userName")
 
     getUserByName(@Param("userName") userName: string) {
-        console.log(userName, "wwww");
         return this.usersService.getUser(userName);
     }
     @Post(":userName")
@@ -23,7 +22,6 @@ export class UsersController {
     }
     @Delete(":userName")
     deleteUser(@Param("userName") userName: string) {
-        console.log(userName)
         return this.usersService.deleteUserByName(userName)
     }
 }
