@@ -4,12 +4,11 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 
 export class UsersService {
-    users: string[] = ["ahmed", "mahmoud"];
+    users: string[] = ["ahmed", "mahmoud", "ali", "mostafa"];
     getAllUsers() {
         return this.users;
     };
     getUser(userName: string) {
-        console.log(userName, "s222ssssssssss");
         return this.users.find(user => user === userName) || "user not found";
     };
     addNewUserName(userName: string) {
@@ -20,4 +19,12 @@ export class UsersService {
         this.users = this.users.filter(user => user !== userName);
         return this.users
     };
+    updateUser(userName: string, name: string) {
+        const index = this.users.findIndex(user => user === userName);
+        if (index !== -1) {
+            this.users[index] = name;
+            return this.users;
+        }
+        return "user not found";
+    }
 }

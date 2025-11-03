@@ -9,6 +9,6 @@ export class AppService {
     return 'Test';
   }
   getSecondTest(): string {
-    return 'tttttttttttttttttttttttt';
+    return 'Test 2';
   }
 }
