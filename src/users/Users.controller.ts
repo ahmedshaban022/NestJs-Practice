@@ -13,10 +13,12 @@ export class UsersController {
     @Get(":userName")
 
     getUserByName(@Param("userName") userName: string) {
+        console.log("userName", userName);
         return this.usersService.getUser(userName);
     }
     @Post(":userName")
     addNewUser(@Param() param: any) {
+        console.log("userName", param.userName);
         return this.usersService.addNewUserName(param.userName)
     }
     @Delete(":userName")
