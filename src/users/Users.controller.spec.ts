@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './Users.controller';
 import { UsersService } from './Users.service';
-
+// log to show that the spec file is loaded
+console.log('Users.controller.spec.ts loaded');
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
@@ -71,7 +72,7 @@ describe('UsersController', () => {
       // First add a user to delete
       service.addNewUserName('todelete');
       const initialLength = service.getAllUsers().length;
-      
+
       const result = controller.deleteUser('todelete');
       expect(result).not.toContain('todelete');
       expect(result.length).toBe(initialLength - 1);
@@ -87,7 +88,7 @@ describe('UsersController', () => {
       const usersBefore = [...service.getAllUsers()];
       controller.deleteUser('ahmed');
       const usersAfter = controller.getAllUsers();
-      
+
       // Check that other users still exist
       expect(usersAfter).toContain('mahmoud');
       expect(usersAfter).toContain('ali');
@@ -99,7 +100,7 @@ describe('UsersController', () => {
     it('should update a user when found', () => {
       // Reset users array to ensure 'ahmed' exists
       service.users = ['ahmed', 'mahmoud', 'ali', 'mostafa'];
-      
+
       const result = controller.updateUser('ahmed', 'ahmedUpdated');
       expect(result).toContain('ahmedUpdated');
       expect(result).not.toContain('ahmed');
@@ -121,7 +122,7 @@ describe('UsersController', () => {
       service.users = ['ahmed', 'mahmoud', 'ali', 'mostafa'];
       controller.updateUser('ahmed', 'ahmedUpdated');
       const users = controller.getAllUsers();
-      
+
       expect(users).toContain('ahmedUpdated');
       expect(users).toContain('mahmoud');
       expect(users).toContain('ali');
