@@ -6,4 +6,7 @@ export class ProductsService {
     getAllProducts() {
         return this.products;
     }
+    getProduct(productName: string) {
+        return this.products.find(product => product === productName) || "product not found";
+    }
 }
