@@ -17,4 +17,12 @@ export class ProductsService {
         }
         return "product not found";
     }
+    deleteProduct(productName: string) {
+        const index = this.products.findIndex(product => product === productName);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+            return `Product ${productName} deleted`;
+        }
+        return "product not found";
+    }
 }
