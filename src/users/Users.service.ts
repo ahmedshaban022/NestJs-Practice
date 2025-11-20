@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 
 export class UsersService {
-    users: string[] = ["ahmed", "mahmoud", "ali", "mostafa"];
+    users: string[] = ["ahmed", "mahmoud", "ali", "mostafa", "tmara", "omar"];
     // get all users
     getAllUsers() {
         return this.users;
