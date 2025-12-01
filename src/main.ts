@@ -2,6 +2,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
+
+// this code is for fastify server 
 // import { NestFactory } from '@nestjs/core';
 // import {
 //   FastifyAdapter,
