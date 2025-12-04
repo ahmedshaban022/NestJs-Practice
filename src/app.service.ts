@@ -6,9 +6,9 @@ export class AppService {
     return 'Welcom to the NestJS Application!';
   }
   getTest(): string {
-    return 'Test';
+    return 'Hello its api test';
   }
   getSecondTest(): string {
-    return 'Test 2';
+    return '  Hello its second api test';
   }
 }
