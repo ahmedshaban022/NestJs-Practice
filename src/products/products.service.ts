@@ -2,7 +2,7 @@ import { Get, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
-    products: string[] = ['laptop', 'phone', 'tablet', 'monitor', 'keyboard', 'mouse', 'printer', 'router'];
+    products: string[] = ['laptop', 'phone', 'tablet', 'monitor', 'keyboard', 'mouse', 'printer', 'router',"speaker", 'webcam', 'headphones'];
     // get all products
     getAllProducts() {
         return this.products;
