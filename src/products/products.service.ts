@@ -5,6 +5,9 @@ export class ProductsService {
     products: string[] = ['laptop', 'phone', 'tablet', 'monitor', 'keyboard', 'mouse', 'printer', "speaker", 'webcam', 'headphones', 'microphone', 'projector', 'scanner', 'external hard drive', 'USB flash drive', 'power bank', 'smartwatch', 'fitness tracker', 'VR headset', 'gaming console'];
     // get all products
     getAllProducts() {
+        if (this.products.length === 0) {
+            return "No products available";
+        }
         return this.products;
     }
     // get a single product
