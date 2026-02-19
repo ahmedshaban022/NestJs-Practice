@@ -12,7 +12,7 @@ export class ProductsService {
     }
     // get a single product
     getProduct(productName: string) {
-        return this.products.find(product => product === productName) || "product not found";
+        return this.products.find(product => product === productName) || "the product is not found";
     }
     // add a new product
     addProduct(productName: string) {
