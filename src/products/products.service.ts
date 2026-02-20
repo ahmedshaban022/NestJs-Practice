@@ -16,6 +16,9 @@ export class ProductsService {
     }
     // add a new product
     addProduct(productName: string) {
+        if(this.products.includes(productName)) {
+            return "product already exists";
+        }
         this.products.push(productName);
         return `Product ${productName} added`;
     }
