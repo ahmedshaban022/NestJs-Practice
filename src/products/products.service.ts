@@ -34,10 +34,11 @@ export class ProductsService {
     // delete a product
     deleteProduct(productName: string) {
         const index = this.products.findIndex(product => product === productName);
+
         if (index !== -1) {
             this.products.splice(index, 1);
             return `Product ${productName} deleted`;
         }
-        return "product not found";
+        return "product not found!";
     }
 }
