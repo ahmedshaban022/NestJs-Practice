@@ -16,6 +16,7 @@ export class ProductsService {
     }
     // add a new product
     addProduct(productName: string) {
+        // Check if the product already exists
         if(this.products.includes(productName)) {
             return "product already exists";
         }
