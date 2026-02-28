@@ -35,7 +35,7 @@ export class ProductsService {
     // delete a product
     deleteProduct(productName: string) {
         const index = this.products.findIndex(product => product === productName);
-
+        // Check if the product exists before trying to delete it
         if (index !== -1) {
             this.products.splice(index, 1);
             return `Product ${productName} deleted`;
