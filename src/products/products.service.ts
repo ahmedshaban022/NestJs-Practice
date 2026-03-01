@@ -28,6 +28,7 @@ export class ProductsService {
         const index = this.products.findIndex(product => product === oldName);
         if (index !== -1) {
             this.products[index] = newName;
+            // Check if the update was successful
             return `Product updated to ${newName}`;
         }
         return "product not found";
