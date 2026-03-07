@@ -11,6 +11,7 @@ export class ProductsController {
     }
     @Get(":productName")
     getProduct(@Param("productName") productName: string) {
+        // using the find method to search for the product in the products array and return it if found, otherwise return a message indicating that the product is not found
         return this.ProductsService.getProduct(productName);
     }
     @Post()
