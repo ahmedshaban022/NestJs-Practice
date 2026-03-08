@@ -16,6 +16,7 @@ export class ProductsController {
     }
     @Post()
     addProduct(@Body("productName") productName: string) {
+        // using the addProduct method of the ProductsService to add a new product to the products array and return a message indicating that the product has been added successfully
         return this.ProductsService.addProduct(productName);
     }
     @Patch(":productName")
