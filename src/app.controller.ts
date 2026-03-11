@@ -7,6 +7,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
+    // this is the root route
     return this.appService.getHello();
   }
   @Get("/test")
