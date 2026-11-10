@@ -40,11 +40,32 @@ function Write-Log {
 
 function Invoke-Git {
     param([string[]]$GitArgs)
-    $out = & git -C $RepoRoot @GitArgs 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        throw ("git {0} failed: {1}" -f ($GitArgs -join ' '), ($out -join "`n"))
+
+    # Run git with stderr captured separately, so stdout stays clean and
+    # parseable (git emits harmless warnings like "LF will be replaced by
+    # CRLF" on stderr, which would otherwise corrupt parsed output).
+    $errFile = [System.IO.Path]::GetTempFileName()
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $out = & git -C $RepoRoot @GitArgs 2> $errFile
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $prev
+        $errText = ''
+        if (Test-Path $errFile) {
+            $errText = (Get-Content $errFile -Raw -ErrorAction SilentlyContinue)
+            Remove-Item $errFile -Force -ErrorAction SilentlyContinue
+        }
     }
-    return $out
+
+    if ($code -ne 0) {
+        throw ("git {0} failed ({1}): {2}{3}" -f ($GitArgs -join ' '), $code, (($out | ForEach-Object { $_.ToString() }) -join "`n"), $errText)
+    }
+
+    # Always return a single string, so callers can safely call .Trim() on it
+    # even when git produced no output.
+    return (($out | ForEach-Object { $_.ToString() }) -join "`n")
 }
 
 Set-Location $RepoRoot
@@ -66,8 +87,8 @@ if (-not (Test-Path (Join-Path $RepoRoot '.git'))) {
     exit 1
 }
 
-Invoke-Git @('-config', "user.name=$GitName")  | Out-Null
-Invoke-Git @('-config', "user.email=$GitEmail") | Out-Null
+Invoke-Git @('config', 'user.name',  $GitName)  | Out-Null
+Invoke-Git @('config', 'user.email', $GitEmail) | Out-Null
 
 $branch = (Invoke-Git @('rev-parse', '--abbrev-ref', 'HEAD')).Trim()
 if ($branch -ne $Branch) {
@@ -75,11 +96,22 @@ if ($branch -ne $Branch) {
     exit 1
 }
 
-$dirty = (Invoke-Git @('status', '--porcelain')).Trim()
-if ($dirty) {
-    Write-Log "ERROR: working tree is dirty; refusing to commit on top of uncommitted work."
-    Write-Log $dirty
+# Only block on states where committing is genuinely unsafe (in-progress
+# merge/rebase/cherry-pick, or conflicted paths). Ordinary uncommitted work
+# in other files is left untouched: this script only ever stages
+# ACTIVITY.md, so it never sweeps unrelated changes into its commits.
+$unmerged = (Invoke-Git @('diff', '--name-only', '--diff-filter=U')).Trim()
+if ($unmerged) {
+    Write-Log "ERROR: unresolved merge conflicts; refusing to commit."
+    Write-Log $unmerged
     exit 1
+}
+
+foreach ($state in @('MERGE_HEAD', 'REBASE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD')) {
+    if (Test-Path (Join-Path $RepoRoot ".git\$state")) {
+        Write-Log "ERROR: $state is present; refusing to commit during an unfinished git operation."
+        exit 1
+    }
 }
 
 # ---------------------------------------------------------------- pick the churn count
