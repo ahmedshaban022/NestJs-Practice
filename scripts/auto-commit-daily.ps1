@@ -1,7 +1,7 @@
 <#
     Daily auto-commit churn for NestJs-Practice.
 
-    Creates a random number of commits (20..40) per run, each one a small,
+    Creates a random number of commits (8..50) per run, each one a small,
     reversible change (one appended line in ACTIVITY.md), then pushes the
     branch to origin.
 
@@ -15,8 +15,8 @@
 [CmdletBinding()]
 param(
     [switch]$Force,
-    [int]$MinCommits = 20,
-    [int]$MaxCommits = 40
+    [int]$MinCommits = 8,
+    [int]$MaxCommits = 50
 )
 
 $ErrorActionPreference = 'Stop'
